@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import stenahe.java_sql_api.run.Location;
 import stenahe.java_sql_api.run.Run;
+import stenahe.java_sql_api.run.RunRepository;
 
 import java.time.LocalDateTime;
 
@@ -19,14 +20,6 @@ public class Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 		log.info("Application started");
-	}
-
-	@Bean
-	CommandLineRunner runner() {
-		return args -> {
-			Run run = new Run(1, "First Run", LocalDateTime.now(), LocalDateTime.now().plusMinutes(30), 10, Location.OUTDOOR);
-			log.info("Run: {}", run);
-		};
 	}
 
 }

@@ -45,7 +45,19 @@ class RunController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void update(@PathVariable Integer id, @Valid @RequestBody Run run) {
-        runRepository.save(run);
+        Run existingRun = runRepository.findById(id).orElseThrow(
+                () -> new RunNotFoundException("Run with id " + id + " not found.")
+        );
+        Run updatedRun = new Run(
+                existingRun.id(),
+                run.title(),
+                run.startedOn(),
+                run.completedOn(),
+                run.miles(),
+                run.location(),
+                existingRun.version()
+        );
+        runRepository.save(updatedRun);
     }
 
     @DeleteMapping("/{id}")

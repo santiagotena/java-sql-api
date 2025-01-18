@@ -4,6 +4,9 @@ GET http://localhost:8080/api/runs
 ### Find Run By ID
 GET http://localhost:8080/api/runs/2
 
+### Find Runs by Location
+GET http://localhost:8080/api/runs/location/OUTDOOR
+
 ### Ask for an ID that does not exists
 GET http://localhost:8080/api/runs/99
 

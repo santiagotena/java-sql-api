@@ -15,20 +15,20 @@ public class RunJsonDataLoader implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(RunJsonDataLoader.class);
     private final ObjectMapper objectMapper;
-    private final JdbcClientRunRepository runRepository;
+    private final JdbcClientRunRepository jdbcClientRunRepository;
 
-    public RunJsonDataLoader(ObjectMapper objectMapper, JdbcClientRunRepository runRepository) {
+    public RunJsonDataLoader(ObjectMapper objectMapper, JdbcClientRunRepository jdbcClientRunRepository) {
         this.objectMapper = objectMapper;
-        this.runRepository = runRepository;
+        this.jdbcClientRunRepository = jdbcClientRunRepository;
     }
 
     @Override
     public void run(String... args) throws Exception {
-        if(runRepository.count() == 0) {
+        if(jdbcClientRunRepository.count() == 0) {
             try (InputStream inputStream = TypeReference.class.getResourceAsStream("/data/runs.json")) {
                 Runs allRuns = objectMapper.readValue(inputStream, Runs.class);
                 log.info("Reading {} runs from JSON data and saving to in-memory collection.", allRuns.runs().size());
-                runRepository.saveAll(allRuns.runs());
+                jdbcClientRunRepository.saveAll(allRuns.runs());
             } catch (IOException e) {
                 throw new RuntimeException("Failed to read JSON data", e);
             }
